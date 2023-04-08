@@ -1,3 +1,3 @@
 # 1c-cahce-cleaner
 
-![ScreenShot](app/src/main/resoursec/image.png)
+![ScreenShot](app/src/main/resources/image.png)
