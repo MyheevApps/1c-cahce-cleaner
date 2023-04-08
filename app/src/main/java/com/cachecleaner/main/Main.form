@@ -118,12 +118,11 @@
         <Component class="javax.swing.JList" name="listBases">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
+              <StringArray count="4">
+                <StringItem index="0" value="1&#x421;:&#x411;&#x443;&#x445;&#x433;&#x430;&#x43b;&#x442;&#x435;&#x440;&#x438;&#x44f;"/>
+                <StringItem index="1" value="1&#x421;:&#x414;&#x43e;&#x43a;&#x443;&#x43c;&#x435;&#x43d;&#x442;&#x43e;&#x43e;&#x431;&#x43e;&#x440;&#x43e;&#x442;"/>
+                <StringItem index="2" value="1&#x421;:&#x417;&#x430;&#x440;&#x43f;&#x43b;&#x430;&#x442;&#x430; &#x438; &#x443;&#x43f;&#x440;&#x430;&#x432;&#x43b;&#x435;&#x43d;&#x438;&#x435; &#x43f;&#x435;&#x440;&#x441;&#x43e;&#x43d;&#x430;&#x43b;&#x43e;&#x43c;"/>
+                <StringItem index="3" value="1&#x421;:&#x423;&#x43f;&#x440;&#x430;&#x432;&#x43b;&#x435;&#x43d;&#x438;&#x435; &#x442;&#x43e;&#x440;&#x433;&#x43e;&#x432;&#x43b;&#x435;&#x439;"/>
               </StringArray>
             </Property>
           </Properties>
