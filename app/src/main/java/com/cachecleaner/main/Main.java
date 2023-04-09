@@ -70,8 +70,10 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listBases);
 
         buttonClean.setText("Очистить кэш");
+        buttonClean.setFocusPainted(false);
 
         buttonAdd.setText("Изменить");
+        buttonAdd.setFocusPainted(false);
         buttonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonAddActionPerformed(evt);
@@ -79,8 +81,10 @@ public class Main extends javax.swing.JFrame {
         });
 
         jButton1.setText("Добавить");
+        jButton1.setFocusPainted(false);
 
         jButton2.setText("Удалить");
+        jButton2.setFocusPainted(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
