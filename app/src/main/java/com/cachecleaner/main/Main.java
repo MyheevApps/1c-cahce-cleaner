@@ -31,11 +31,12 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         listBases = new javax.swing.JList<>();
         buttonClean = new javax.swing.JButton();
+        buttonChange = new javax.swing.JButton();
         buttonAdd = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        buttonDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(468, 350));
 
         topPanel.setBackground(new java.awt.Color(100, 149, 180));
         topPanel.setPreferredSize(new java.awt.Dimension(0, 60));
@@ -69,10 +70,24 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(listBases);
 
+        buttonClean.setBackground(new java.awt.Color(100, 149, 180));
+        buttonClean.setForeground(new java.awt.Color(255, 255, 255));
         buttonClean.setText("Очистить кэш");
         buttonClean.setFocusPainted(false);
 
-        buttonAdd.setText("Изменить");
+        buttonChange.setBackground(new java.awt.Color(100, 149, 180));
+        buttonChange.setForeground(new java.awt.Color(255, 255, 255));
+        buttonChange.setText("Изменить");
+        buttonChange.setFocusPainted(false);
+        buttonChange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonChangeActionPerformed(evt);
+            }
+        });
+
+        buttonAdd.setBackground(new java.awt.Color(100, 149, 180));
+        buttonAdd.setForeground(new java.awt.Color(255, 255, 255));
+        buttonAdd.setText("Добавить");
         buttonAdd.setFocusPainted(false);
         buttonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,11 +95,10 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Добавить");
-        jButton1.setFocusPainted(false);
-
-        jButton2.setText("Удалить");
-        jButton2.setFocusPainted(false);
+        buttonDelete.setBackground(new java.awt.Color(100, 149, 180));
+        buttonDelete.setForeground(new java.awt.Color(255, 255, 255));
+        buttonDelete.setText("Удалить");
+        buttonDelete.setFocusPainted(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,11 +111,11 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(buttonClean)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(buttonDelete)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(buttonAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonAdd))
+                        .addComponent(buttonChange))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -114,17 +128,23 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonClean)
+                    .addComponent(buttonChange)
                     .addComponent(buttonAdd)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(buttonDelete))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
+    private void buttonChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonChangeActionPerformed
         // TODO add your handling code here:
+    }//GEN-LAST:event_buttonChangeActionPerformed
+
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
+        AddDialog dialog = new AddDialog(this, rootPaneCheckingEnabled);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }//GEN-LAST:event_buttonAddActionPerformed
 
     /**
@@ -164,9 +184,9 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdd;
+    private javax.swing.JButton buttonChange;
     private javax.swing.JButton buttonClean;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton buttonDelete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> listBases;
