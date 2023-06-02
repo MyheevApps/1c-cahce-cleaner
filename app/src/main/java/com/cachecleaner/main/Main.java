@@ -4,6 +4,11 @@
  */
 package com.cachecleaner.main;
 
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author max
@@ -16,6 +21,19 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
     }
+    
+    private void chooseFile(JTextField textField) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Выбор директории");
+        
+        // Определение режима - только каталог
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int result = fileChooser.showOpenDialog(this);
+        if (result == 0) {
+            String path = fileChooser.getSelectedFile().getAbsolutePath();
+            textField.setText(path);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,24 +45,37 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         topPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listBases = new javax.swing.JList<>();
+        appName = new javax.swing.JLabel();
         buttonClean = new javax.swing.JButton();
-        buttonChange = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        mainTable = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        name = new javax.swing.JLabel();
+        textFieldName = new javax.swing.JTextField();
+        roaming = new javax.swing.JLabel();
+        textFieldRoaming = new javax.swing.JTextField();
+        buttonRoaming = new javax.swing.JButton();
+        local = new javax.swing.JLabel();
+        textFieldLocal = new javax.swing.JTextField();
+        buttonLocal = new javax.swing.JButton();
         buttonAdd = new javax.swing.JButton();
+        buttonUpdate = new javax.swing.JButton();
         buttonDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(468, 350));
+        setBackground(new java.awt.Color(255, 255, 255));
+        setMaximumSize(new java.awt.Dimension(798, 460));
+        setMinimumSize(new java.awt.Dimension(798, 460));
+        setPreferredSize(new java.awt.Dimension(850, 500));
+        setResizable(false);
 
-        topPanel.setBackground(new java.awt.Color(100, 149, 180));
+        topPanel.setBackground(new java.awt.Color(59, 74, 92));
         topPanel.setPreferredSize(new java.awt.Dimension(0, 60));
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Bitstream Charter", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Cache Cleaner");
+        appName.setBackground(new java.awt.Color(255, 255, 255));
+        appName.setFont(new java.awt.Font("Bitstream Charter", 1, 24)); // NOI18N
+        appName.setForeground(new java.awt.Color(255, 255, 255));
+        appName.setText("Cache Cleaner");
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
@@ -52,40 +83,100 @@ public class Main extends javax.swing.JFrame {
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(appName, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(topPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(appName, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        listBases.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "1С:Бухгалтерия", "1С:Документооборот", "1С:Зарплата и управление персоналом", "1С:Управление торговлей" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(listBases);
-
-        buttonClean.setBackground(new java.awt.Color(100, 149, 180));
+        buttonClean.setBackground(new java.awt.Color(134, 145, 159));
+        buttonClean.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         buttonClean.setForeground(new java.awt.Color(255, 255, 255));
         buttonClean.setText("Очистить кэш");
         buttonClean.setFocusPainted(false);
 
-        buttonChange.setBackground(new java.awt.Color(100, 149, 180));
-        buttonChange.setForeground(new java.awt.Color(255, 255, 255));
-        buttonChange.setText("Изменить");
-        buttonChange.setFocusPainted(false);
-        buttonChange.addActionListener(new java.awt.event.ActionListener() {
+        mainTable.setBackground(new java.awt.Color(255, 255, 255));
+        mainTable.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        mainTable.setForeground(new java.awt.Color(0, 0, 0));
+        mainTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Очистить", "Имя", "Local", "Roaming"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        mainTable.setShowHorizontalLines(true);
+        mainTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mainTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(mainTable);
+        if (mainTable.getColumnModel().getColumnCount() > 0) {
+            mainTable.getColumnModel().getColumn(0).setMinWidth(30);
+            mainTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+            mainTable.getColumnModel().getColumn(0).setMaxWidth(100);
+        }
+
+        jPanel1.setBackground(new java.awt.Color(59, 74, 92));
+
+        name.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        name.setForeground(new java.awt.Color(255, 255, 255));
+        name.setText("Наименование:");
+
+        textFieldName.setPreferredSize(new java.awt.Dimension(64, 25));
+        textFieldName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonChangeActionPerformed(evt);
+                textFieldNameActionPerformed(evt);
             }
         });
 
-        buttonAdd.setBackground(new java.awt.Color(100, 149, 180));
+        roaming.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        roaming.setForeground(new java.awt.Color(255, 255, 255));
+        roaming.setText("Roaming:");
+
+        textFieldRoaming.setPreferredSize(new java.awt.Dimension(64, 25));
+
+        buttonRoaming.setBackground(new java.awt.Color(134, 145, 159));
+        buttonRoaming.setForeground(new java.awt.Color(255, 255, 255));
+        buttonRoaming.setText("jButton1");
+        buttonRoaming.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRoamingActionPerformed(evt);
+            }
+        });
+
+        local.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        local.setForeground(new java.awt.Color(255, 255, 255));
+        local.setText("Local:");
+
+        textFieldLocal.setPreferredSize(new java.awt.Dimension(64, 25));
+
+        buttonLocal.setBackground(new java.awt.Color(134, 145, 159));
+        buttonLocal.setForeground(new java.awt.Color(255, 255, 255));
+        buttonLocal.setText("jButton1");
+        buttonLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonLocalActionPerformed(evt);
+            }
+        });
+
+        buttonAdd.setBackground(new java.awt.Color(134, 145, 159));
+        buttonAdd.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         buttonAdd.setForeground(new java.awt.Color(255, 255, 255));
         buttonAdd.setText("Добавить");
         buttonAdd.setFocusPainted(false);
@@ -95,57 +186,170 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        buttonDelete.setBackground(new java.awt.Color(100, 149, 180));
+        buttonUpdate.setBackground(new java.awt.Color(134, 145, 159));
+        buttonUpdate.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        buttonUpdate.setForeground(new java.awt.Color(255, 255, 255));
+        buttonUpdate.setText("Изменить");
+        buttonUpdate.setFocusPainted(false);
+        buttonUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonUpdateActionPerformed(evt);
+            }
+        });
+
+        buttonDelete.setBackground(new java.awt.Color(134, 145, 159));
+        buttonDelete.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         buttonDelete.setForeground(new java.awt.Color(255, 255, 255));
         buttonDelete.setText("Удалить");
         buttonDelete.setFocusPainted(false);
+        buttonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDeleteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(buttonAdd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                        .addComponent(buttonDelete))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(name)
+                            .addComponent(roaming)
+                            .addComponent(local))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(textFieldLocal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buttonLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(textFieldRoaming, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(textFieldName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buttonRoaming, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(name)
+                    .addComponent(textFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(textFieldRoaming, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonRoaming)
+                    .addComponent(roaming, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(local, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textFieldLocal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonLocal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonAdd)
+                    .addComponent(buttonUpdate)
+                    .addComponent(buttonDelete))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(topPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+            .addComponent(topPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 798, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(buttonClean)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                        .addComponent(buttonDelete)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buttonClean))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonChange))
-                    .addComponent(jScrollPane1))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonClean)
-                    .addComponent(buttonChange)
-                    .addComponent(buttonAdd)
-                    .addComponent(buttonDelete))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonClean)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonChangeActionPerformed
+    private void buttonRoamingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRoamingActionPerformed
+        chooseFile(textFieldRoaming);
+    }//GEN-LAST:event_buttonRoamingActionPerformed
+
+    private void buttonLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLocalActionPerformed
+        chooseFile(textFieldLocal);
+    }//GEN-LAST:event_buttonLocalActionPerformed
+
+    private void textFieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonChangeActionPerformed
+    }//GEN-LAST:event_textFieldNameActionPerformed
 
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
-        AddDialog dialog = new AddDialog(this, rootPaneCheckingEnabled);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
+        DefaultTableModel model = (DefaultTableModel) mainTable.getModel();
+        model.addRow(new Object[]{false, textFieldName.getText()
+                , textFieldLocal.getText().trim()
+                , textFieldRoaming.getText().trim()});
     }//GEN-LAST:event_buttonAddActionPerformed
+
+    private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
+        int selectedRow = mainTable.getSelectedRow();
+        
+        DefaultTableModel model = (DefaultTableModel) mainTable.getModel();
+        
+        if (selectedRow >= 0) {
+            model.setValueAt(false, selectedRow, 0);
+            model.setValueAt(textFieldName.getText(), selectedRow, 1);
+            model.setValueAt(textFieldLocal.getText(), selectedRow, 2);
+            model.setValueAt(textFieldRoaming.getText(), selectedRow, 3);
+        } else {
+            JOptionPane.showMessageDialog(this,"Error");
+        }
+    }//GEN-LAST:event_buttonUpdateActionPerformed
+
+    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
+        int selectedRow = mainTable.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) mainTable.getModel();
+        
+        if (selectedRow >= 0) {
+            model.removeRow(selectedRow);
+        } else {
+            JOptionPane.showMessageDialog(this,"Выберите элемент таблицы");
+        }
+    }//GEN-LAST:event_buttonDeleteActionPerformed
+
+    private void mainTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mainTableMouseClicked
+        int selectedRow = mainTable.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) mainTable.getModel();
+        textFieldName.setText(model.getValueAt(selectedRow, 1).toString());
+        textFieldLocal.setText(model.getValueAt(selectedRow, 2).toString());
+        textFieldRoaming.setText(model.getValueAt(selectedRow, 3).toString());
+    }//GEN-LAST:event_mainTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -183,13 +387,22 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel appName;
     private javax.swing.JButton buttonAdd;
-    private javax.swing.JButton buttonChange;
     private javax.swing.JButton buttonClean;
     private javax.swing.JButton buttonDelete;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> listBases;
+    private javax.swing.JButton buttonLocal;
+    private javax.swing.JButton buttonRoaming;
+    private javax.swing.JButton buttonUpdate;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel local;
+    private javax.swing.JTable mainTable;
+    private javax.swing.JLabel name;
+    private javax.swing.JLabel roaming;
+    private javax.swing.JTextField textFieldLocal;
+    private javax.swing.JTextField textFieldName;
+    private javax.swing.JTextField textFieldRoaming;
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 }
