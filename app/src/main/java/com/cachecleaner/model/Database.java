@@ -15,7 +15,7 @@ public class Database implements Serializable {
     private String localPath;
     private String roamingPath;
 
-    public Database(String name, String localPath, String roamingPath) {
+    public Database(String name, String roamingPath, String localPath) {
         this.name = name;
         this.localPath = localPath;
         this.roamingPath = roamingPath;
