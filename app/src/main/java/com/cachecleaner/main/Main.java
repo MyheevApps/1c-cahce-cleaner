@@ -4,6 +4,10 @@
  */
 package com.cachecleaner.main;
 
+import com.cachecleaner.model.Database;
+import com.cachecleaner.utils.Serialization;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -20,6 +24,25 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        fillMainTable();
+    }
+    
+    private void fillMainTable() {
+        List<Database> dataList = Serialization.getTable();     
+        DefaultTableModel model = (DefaultTableModel) mainTable.getModel(); 
+        
+        if (dataList != null) {
+            for (Database database : dataList) { 
+                try {
+                    model.addRow(new Object[]{false,
+                        database.getName(),
+                        database.getRoamingPath(),
+                        database.getLocalPath()});
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
     
     private void chooseFile(JTextField textField) {
@@ -108,7 +131,7 @@ public class Main extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Очистить", "Имя", "Local", "Roaming"
+                "Очистить", "Имя", "Roaming", "Local"
             }
         ) {
             Class[] types = new Class [] {
@@ -315,6 +338,16 @@ public class Main extends javax.swing.JFrame {
         model.addRow(new Object[]{false, textFieldName.getText()
                 , textFieldLocal.getText().trim()
                 , textFieldRoaming.getText().trim()});
+        
+        List<Database> data = new ArrayList<>();
+        
+        for (int i = 0; i < mainTable.getRowCount(); i++) {
+            data.add(new Database(mainTable.getValueAt(i, 1).toString(),
+                    mainTable.getValueAt(i, 2).toString(),
+                    mainTable.getValueAt(i, 3).toString()));
+        }
+        
+        Serialization.saveToFile(data);
     }//GEN-LAST:event_buttonAddActionPerformed
 
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
